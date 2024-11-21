@@ -7,7 +7,7 @@
 ### Backend
 
 -   [x] model for user: username, password, fullName, email, followers, following, profileImg, bio, link, likedPosts, timestamps
--   [ ] model for posts: user, image, text, likes, comments, timestamps
+-   [x] model for posts: user, image, text, likes, comments: (text, user, createdAt), timestamps
 -   [ ] model for notifications: fromUser, toUser, type: (follow, like), read, timestamps
 -   [ ] routes for authentication: signup, login, logout, getAuthUser
 -   [ ] routes for notifications: getAllNotifications, getSingleNotification, deleteNotifications, deleteSingleNotification
