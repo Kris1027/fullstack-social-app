@@ -83,3 +83,29 @@ export const login = async (req, res) => {
         res.status(500).json({ message: 'Internal Server Error' });
     }
 };
+
+export const logout = async (req, res) => {
+    try {
+        // clear the JWT cookie
+        res.clearCookie('jwt', {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+        });
+
+        // respond with success
+        res.status(200).json({ message: 'Logged out successfully' });
+    } catch (error) {
+        console.error('Error in logout controller', error.message);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
+
+export const getAuthUser = async (req, res) => {
+    try {
+        res.status(200).json(req.user);
+    } catch (error) {
+        console.error('Error in getAuthUser controller', error.message);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
