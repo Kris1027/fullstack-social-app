@@ -11,7 +11,7 @@
 -   [x] model for posts: user, image, text, likes, comments: (text, user, createdAt), timestamps
 -   [x] model for notifications: fromUser, toUser, type: (follow, like, comment), read, timestamps
 -   [x] middleware to protect routes from unauthorized users
--   [ ] routes for authentication: signup, login, logout, getAuthUser
+-   [x] routes for authentication and authorization: signup, login, logout, getAuthUser and validation
 -   [ ] routes for notifications: getAllNotifications, getSingleNotification, deleteNotifications, deleteSingleNotification
 -   [ ] routes for posts: getAllPosts, getFollowedPosts, getLikedPosts, getUserPosts, createPost, toggleLikePost, commentOnPost, updatePost, deletePost
 -   [ ] routes for user: getUserProfile, getSuggestedUsers, toggleFollowUser, updateUser
