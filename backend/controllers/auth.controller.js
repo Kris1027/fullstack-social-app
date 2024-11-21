@@ -37,9 +37,9 @@ export const signup = async (req, res) => {
 
         // set the token in a cookie
         res.cookie('jwt', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production', // only in production
-            sameSite: 'strict', // access to cookies only from the same domain
+            httpOnly: true, // prevent access via JavaScript
+            secure: process.env.NODE_ENV === 'production', // Only send over HTTPS in production
+            sameSite: 'strict', // CSRF protection
         });
 
         // respond with success
@@ -47,5 +47,39 @@ export const signup = async (req, res) => {
     } catch (error) {
         console.error('Error in signup controller', error.message);
         res.status(500).json('Internal Server Error');
+    }
+};
+
+export const login = async (req, res) => {
+    try {
+        // extract email and password from request body
+        const { username, email, password } = req.body;
+
+        // find user by email or username
+        const user = await User.findOne({ $or: [{ email }, { username }] });
+        if (!user) return res.status(404).json({ message: 'User not found' });
+
+        // verify password
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) return res.status(401).json({ message: 'Invalid credentials' });
+
+        // generate a JWT token
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+        // set token in a cookie
+        res.cookie('jwt', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+        });
+
+        // respond with success
+        res.status(200).json({
+            message: 'Logged in successfully',
+            user: { id: user._id, username: user.username, email: user.email },
+        });
+    } catch (error) {
+        console.error('Error in login controller', error.message);
+        res.status(500).json({ message: 'Internal Server Error' });
     }
 };
