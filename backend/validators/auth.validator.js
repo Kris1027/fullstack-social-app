@@ -42,3 +42,16 @@ export const validateSignup = [
         .withMessage('Password must be less than 30 characters long'),
     handleValidateErrors,
 ];
+
+export const validateLogin = [
+    body('username').optional(),
+    body('email').optional(),
+    body('password').notEmpty().withMessage('Password is required'),
+    body().custom((value, { req }) => {
+        if (!req.body.username && !req.body.email) {
+            throw new Error('Username or Email is required');
+        }
+        return true;
+    }),
+    handleValidateErrors,
+];
