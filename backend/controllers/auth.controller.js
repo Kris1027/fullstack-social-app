@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
 import User from '../models/user.model.js';
+import { generateTokenAndSetCookie } from '../utils/generate-token-and-set-cookie.js';
 
 export const signup = async (req, res) => {
     try {
@@ -30,17 +30,8 @@ export const signup = async (req, res) => {
         });
         await newUser.save();
 
-        // generate a JWT token
-        const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, {
-            expiresIn: '1h',
-        });
-
-        // set the token in a cookie
-        res.cookie('jwt', token, {
-            httpOnly: true, // prevent access via JavaScript
-            secure: process.env.NODE_ENV === 'production', // Only send over HTTPS in production
-            sameSite: 'strict', // CSRF protection
-        });
+        // generate a JWT token and set the token in a cookie
+        generateTokenAndSetCookie(newUser._id, res);
 
         // remove the password before sending the response to the client
         const { password: _, ...userWithoutPassword } = newUser._doc;
@@ -57,7 +48,7 @@ export const signup = async (req, res) => {
 
 export const login = async (req, res) => {
     try {
-        // extract email and password from request body
+        // extract user data from request body
         const { username, email, password } = req.body;
 
         // find user by email or username
@@ -68,15 +59,8 @@ export const login = async (req, res) => {
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) return res.status(401).json({ message: 'Invalid credentials' });
 
-        // generate a JWT token
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-        // set token in a cookie
-        res.cookie('jwt', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
-        });
+        // generate a JWT token and set the token in a cookie
+        generateTokenAndSetCookie(user._id, res);
 
         // respond with success
         res.status(200).json({
