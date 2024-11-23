@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs';
 import User from '../models/user.model.js';
 import { generateTokenAndSetCookie } from '../utils/generate-token-and-set-cookie.js';
+import { handleControllerError } from '../utils/handle-controller-error.js';
 
 export const signup = async (req, res) => {
     try {
@@ -41,8 +42,7 @@ export const signup = async (req, res) => {
             user: userWithoutPassword,
         });
     } catch (error) {
-        console.error('Error in signup controller', error.message);
-        res.status(500).json({ message: 'Internal Server Error' });
+        handleControllerError('signup', res, error);
     }
 };
 
@@ -68,8 +68,7 @@ export const login = async (req, res) => {
             user: { id: user._id, username: user.username, email: user.email },
         });
     } catch (error) {
-        console.error('Error in login controller', error.message);
-        res.status(500).json({ message: 'Internal Server Error' });
+        handleControllerError('login', res, error);
     }
 };
 
@@ -85,8 +84,7 @@ export const logout = async (req, res) => {
         // respond with success
         res.status(200).json({ message: 'Logged out successfully' });
     } catch (error) {
-        console.error('Error in logout controller', error.message);
-        res.status(500).json({ message: 'Internal Server Error' });
+        handleControllerError('logout', res, error);
     }
 };
 
@@ -94,7 +92,6 @@ export const getAuthUser = async (req, res) => {
     try {
         res.status(200).json(req.user);
     } catch (error) {
-        console.error('Error in getAuthUser controller', error.message);
-        res.status(500).json({ message: 'Internal Server Error' });
+        handleControllerError('getAuthUser', res, error);
     }
 };
