@@ -42,11 +42,16 @@ export const signup = async (req, res) => {
             sameSite: 'strict', // CSRF protection
         });
 
+        // remove the password before sending the response to the client
+        const { password: _, ...userWithoutPassword } = newUser._doc;
         // respond with success
-        res.status(201).json({ message: 'User registered successfully', user: newUser });
+        res.status(201).json({
+            message: 'User registered successfully',
+            user: userWithoutPassword,
+        });
     } catch (error) {
         console.error('Error in signup controller', error.message);
-        res.status(500).json('Internal Server Error');
+        res.status(500).json({ message: 'Internal Server Error' });
     }
 };
 
