@@ -1,7 +1,10 @@
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import express from 'express';
+
 import authRouter from './routes/auth.route.js';
+import postRouter from './routes/post.route.js';
+
 import startServer from './server.js';
 
 // load environment variables from a .env file into process.env
@@ -19,5 +22,6 @@ app.use(cookieParser());
 
 // mount the routes
 app.use('/api/auth', authRouter);
+app.use('/api/posts', postRouter);
 
 startServer();

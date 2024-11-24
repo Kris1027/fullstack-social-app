@@ -5,9 +5,9 @@
         "checkJs": true,
         "baseUrl": ".",
         "paths": {
-            "*": ["src/*"]
+            "*": ["*"]
         }
     },
-    "include": ["/**/*"],
+    "include": ["**/*"],
     "exclude": ["node_modules"]
 }
