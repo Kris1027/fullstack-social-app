@@ -13,6 +13,21 @@ export const createPost = async (req, res) => {
         // validate required fields
         if (!image) return res.status(400).json({ message: 'Image is required' });
 
+        // check the text length
+        if (text && text.length > 500)
+            return res.status(400).json({ message: 'Text must not exceed 500 characters' });
+
+        // check if image is in base64 format
+        if (!image.startsWith('data:image/'))
+            return res
+                .status(400)
+                .json({ message: 'Invalid image format. Must be base64-encoded image.' });
+
+        // check if image size is less then 5mb
+        const imageSize = Buffer.byteLength(image, 'base64') / (1024 * 1024);
+        if (imageSize > 5)
+            return res.status(400).json({ message: 'Image size exceeds the 5mb limit' });
+
         // upload the image to cloudinary
         const uploadResult = await cloudinary.uploader.upload(image, {
             folder: 'fullstack-social-app',
