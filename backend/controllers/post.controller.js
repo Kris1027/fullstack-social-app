@@ -1,3 +1,4 @@
+import cloudinary from '../config/cloudinary.js';
 import Post from '../models/post.model.js';
 import { handleControllerError } from '../utils/handle-controller-error.js';
 
@@ -12,10 +13,15 @@ export const createPost = async (req, res) => {
         // validate required fields
         if (!image) return res.status(400).json({ message: 'Image is required' });
 
+        // upload the image to cloudinary
+        const uploadResult = await cloudinary.uploader.upload(image, {
+            folder: 'fullstack-social-app',
+        });
+
         // create a new post
         const newPost = new Post({
             user: userId,
-            image,
+            image: uploadResult.secure_url, // URL of the uploaded image
             text,
             like: [],
             comments: [],
