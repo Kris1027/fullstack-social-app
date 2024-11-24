@@ -1,3 +1,4 @@
+import { v2 as cloudinary } from 'cloudinary';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import express from 'express';
@@ -9,6 +10,13 @@ import startServer from './server.js';
 
 // load environment variables from a .env file into process.env
 dotenv.config();
+
+// configure cloudinary
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 // create an instance of the express application
 export const app = express();
