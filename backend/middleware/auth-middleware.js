@@ -22,6 +22,11 @@ const authMiddleware = async (req, res, next) => {
                 });
         }
 
+        // Ensure the token structure is valid
+        if (typeof decoded !== 'object' || !decoded.userId) {
+            return res.status(401).json({ error: 'Unauthorized: Invalid token structure' });
+        }
+
         // fetching user from database
         const user = await User.findById(decoded.userId).select('-password');
         if (!user) {
@@ -30,6 +35,8 @@ const authMiddleware = async (req, res, next) => {
 
         // assigning a user to the req object
         req.user = user;
+
+        // Continue to the next middleware or controller
         next();
     } catch (error) {
         console.error('Error in authMiddleware', error);
