@@ -12,10 +12,14 @@ const authMiddleware = async (req, res, next) => {
         try {
             decoded = jwt.verify(token, process.env.JWT_SECRET);
         } catch (error) {
-            if (error.name === 'TokenExpiredError') {
-                return res.status(401).json({ error: 'Unauthorized: Token expired' });
-            }
-            return res.status(401).json({ error: 'Unauthorized: Invalid token' });
+            return res
+                .status(401)
+                .json({
+                    error:
+                        error.name === 'TokenExpiredError'
+                            ? 'Unauthorized: Token expired'
+                            : 'Unauthorized: Invalid token',
+                });
         }
 
         // fetching user from database
@@ -28,7 +32,7 @@ const authMiddleware = async (req, res, next) => {
         req.user = user;
         next();
     } catch (error) {
-        console.error('Error in authMiddleware', error.message);
+        console.error('Error in authMiddleware', error);
         return res.status(500).json({ error: 'Internal Server Error' });
     }
 };
