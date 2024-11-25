@@ -293,3 +293,45 @@ export const toggleLikePost = async (req, res) => {
         handleControllerError('toggleLikePost', res, error);
     }
 };
+
+export const getFollowedPosts = async (req, res) => {
+    try {
+        // get the logged in user's ID from req.user
+        const userId = req.user._id;
+
+        // find the logged in user and get the list of followed users
+        const user = await User.findById(userId).select('following');
+        if (!user) return res.status(404).json({ message: 'User not found' });
+
+        // extract the pagination query parameters
+        const { page = 1, limit = 10 } = req.query;
+
+        // calculate the number of posts to skip for pagination
+        const skip = (page - 1) * limit;
+
+        // find posts by followed users
+        const posts = await Post.find({ user: { $in: user.following } })
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(Number(limit))
+            .populate('user', 'username fullName email')
+            .populate('comments.user', 'username fullName email')
+            .populate('likes', 'username fullName email');
+
+        // count the total number of posts for pagination
+        const totalPosts = await Post.countDocuments({ user: { $in: user.following } });
+
+        // respond with the posts and pagination data
+        res.status(200).json({
+            message: 'Followed posts fetched successfully',
+            posts,
+            pagination: {
+                totalPosts,
+                currentPage: Number(page),
+                totalPages: Math.ceil(totalPosts / limit),
+            },
+        });
+    } catch (error) {
+        handleControllerError('getFollowedPosts', res, error);
+    }
+};
