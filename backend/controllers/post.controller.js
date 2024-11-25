@@ -170,3 +170,39 @@ export const getAllPosts = async (req, res) => {
         handleControllerError('getAllPosts', res, error);
     }
 };
+
+export const getUserPosts = async (req, res) => {
+    try {
+        // get the user ID from the URL parameters
+        const { userId } = req.params;
+
+        // extract query parameters for pagination
+        const { page = 1, limit = 10 } = req.query;
+
+        // calculate the number of posts to skip for pagination
+        const skip = (page - 1) * limit;
+
+        // find posts by the user, apply pagination and sorting
+        const posts = await Post.find({ user: userId })
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(Number(limit))
+            .populate('user', 'username fullName email');
+
+        // count total posts for this user
+        const totalPosts = await Post.countDocuments({ user: userId });
+
+        // return the user's posts and pagination data
+        res.status(200).json({
+            message: 'User posts fetched successfully',
+            posts,
+            pagination: {
+                totalPosts,
+                currentPage: Number(page),
+                totalPages: Math.ceil(totalPosts / limit),
+            },
+        });
+    } catch (error) {
+        handleControllerError('getUserPosts', res, error);
+    }
+};
