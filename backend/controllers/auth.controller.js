@@ -3,6 +3,7 @@ import User from '../models/user.model.js';
 
 import { generateTokenAndSetCookie } from '../utils/generate-token-and-set-cookie.js';
 import { handleControllerError } from '../utils/handle-controller-error.js';
+import Post from '../models/post.model.js';
 
 export const signup = async (req, res) => {
     try {
@@ -94,7 +95,13 @@ export const getAuthUser = async (req, res) => {
         // fetch the authenticated user with populated fields
         const authUser = await User.findById(req.user._id)
             .populate('followers', 'username fullName email')
-            .populate('following', 'username fullName email');
+            .populate('following', 'username fullName email')
+            .populate({
+                path: 'likedPosts', // Populate liked posts
+                model: Post,
+                select: '_id image text user createdAt',
+                populate: { path: 'user', select: 'username fullName email' },
+            });
 
         if (!authUser) return res.status(404).json({ message: 'Authenticated user not found' });
 
