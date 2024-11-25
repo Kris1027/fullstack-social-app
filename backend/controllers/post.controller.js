@@ -206,3 +206,41 @@ export const getUserPosts = async (req, res) => {
         handleControllerError('getUserPosts', res, error);
     }
 };
+
+export const commentOnPost = async (req, res) => {
+    try {
+        // get the post ID from the URL parameters
+        const { id: postId } = req.params;
+
+        // get the user ID from the req.user object
+        const userId = req.user._id;
+
+        // extract the comment text from request body
+        const { text } = req.body;
+
+        // validate that the comment text is provided
+        if (!text || text.trim() === '') {
+            return res.status(400).json({ message: 'Comment text is required' });
+        }
+
+        // find the post in the database
+        const post = await Post.findById(postId);
+        if (!post) return res.status(404).json({ message: 'Post not found' });
+
+        // add the new comment to the post's comments array
+        const newComment = {
+            text,
+            user: userId,
+            createdAt: new Date(),
+        };
+        post.comments.push(newComment);
+
+        // save the updated post
+        await post.save();
+
+        // return  a success response
+        res.status(200).json({ message: 'Comment added successfully', comment: newComment });
+    } catch (error) {
+        handleControllerError('commentOnPost', res, error);
+    }
+};
