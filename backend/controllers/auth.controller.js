@@ -1,5 +1,8 @@
 import bcrypt from 'bcryptjs';
+
+import Post from '../models/post.model.js';
 import User from '../models/user.model.js';
+
 import { generateTokenAndSetCookie } from '../utils/generate-token-and-set-cookie.js';
 import { handleControllerError } from '../utils/handle-controller-error.js';
 
@@ -90,7 +93,15 @@ export const logout = async (req, res) => {
 
 export const getAuthUser = async (req, res) => {
     try {
-        res.status(200).json(req.user);
+        // fetch the authenticated user with populated fields
+        const authUser = await User.findById(req.user._id)
+            .populate('followers', 'username fullName email')
+            .populate('following', 'username fullName email');
+
+        if (!authUser) return res.status(404).json({ message: 'Authenticated user not found' });
+
+        // respond with the user details including populated fields
+        res.status(200).json(authUser);
     } catch (error) {
         handleControllerError('getAuthUser', res, error);
     }
