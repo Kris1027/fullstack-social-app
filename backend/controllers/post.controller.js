@@ -152,7 +152,8 @@ export const getAllPosts = async (req, res) => {
             .skip(skip) // skip posts for pagination
             .limit(Number(limit)) // limit the number of posts per page
             .populate('user', 'username fullName email') // populate user data (exclude password)
-            .populate('comments.user', 'username fullName email');
+            .populate('comments.user', 'username fullName email')
+            .populate('likes', 'username fullName email');
 
         // count total posts for pagination
         const totalPosts = await Post.countDocuments();
@@ -189,7 +190,8 @@ export const getUserPosts = async (req, res) => {
             .skip(skip)
             .limit(Number(limit))
             .populate('user', 'username fullName email')
-            .populate('comments.user', 'username fullName email');
+            .populate('comments.user', 'username fullName email')
+            .populate('likes', 'username fullName email');
 
         // count total posts for this user
         const totalPosts = await Post.countDocuments({ user: userId });
