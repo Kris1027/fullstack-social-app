@@ -1,5 +1,8 @@
 import cloudinary from '../config/cloudinary.js';
+
 import Post from '../models/post.model.js';
+import User from '../models/user.model.js';
+
 import { handleControllerError } from '../utils/handle-controller-error.js';
 
 export const createPost = async (req, res) => {
@@ -261,23 +264,30 @@ export const toggleLikePost = async (req, res) => {
         const post = await Post.findById(postId);
         if (!post) return res.status(404).json({ message: 'Post not found' });
 
+        // find the user in the databse
+        const user = await User.findById(userId);
+        if (!user) return res.status(404).json({ message: 'User not found' });
+
         // check if the user already liked the post
         const isLiked = post.likes.includes(userId);
         if (isLiked) {
-            // is user already liked the post, remove the like
+            // if user hasn't liked the post remove the like
             post.likes = post.likes.filter((id) => id.toString() !== userId.toString());
+            user.likedPosts = user.likedPosts.filter((id) => id.toString() !== postId);
         } else {
-            // if user hasn't liked the post, add the like
+            // if user hasn't liked the post add the like
             post.likes.push(userId);
+            user.likedPosts.push(postId);
         }
 
-        // save the updated post
-        await post.save();
+        // save the updated post and user
+        await Promise.all([post.save(), user.save()]);
 
         // return a success response
         res.status(200).json({
             message: isLiked ? 'Post unliked successfully' : 'Post liked successfully',
             likesCount: post.likes.length,
+            likedPosts: user.likedPosts,
         });
     } catch (error) {
         handleControllerError('toggleLikePost', res, error);
