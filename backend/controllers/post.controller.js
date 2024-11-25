@@ -137,3 +137,36 @@ export const updatePost = async (req, res) => {
         handleControllerError('updatePost', res, error);
     }
 };
+
+export const getAllPosts = async (req, res) => {
+    try {
+        // extract query parameters for pagination
+        const { page = 1, limit = 10 } = req.query;
+
+        // calculate the number of posts to skip
+        const skip = (page - 1) * limit;
+
+        // find all posts, populate user data and apply pagination
+        const posts = await Post.find()
+            .sort({ createdAt: -1 }) // sort posts by creation date (newest first)
+            .skip(skip) // skip posts for pagination
+            .limit(Number(limit)) // limit the number of posts per page
+            .populate('user', 'username fullName email'); // populate user data (exclude password)
+
+        // count total posts for pagination
+        const totalPosts = await Post.countDocuments();
+
+        // return the posts and pagination data
+        res.status(200).json({
+            message: 'Posts fetched successfully',
+            posts,
+            pagination: {
+                totalPosts,
+                currentPage: Number(page),
+                totalPages: Math.ceil(totalPosts / limit),
+            },
+        });
+    } catch (error) {
+        handleControllerError('getAllPosts', res, error);
+    }
+};
