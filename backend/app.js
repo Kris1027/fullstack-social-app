@@ -4,6 +4,7 @@ import express from 'express';
 
 import authRouter from './routes/auth.route.js';
 import postRouter from './routes/post.route.js';
+import userRouter from './routes/user.route.js';
 
 import startServer from './server.js';
 
@@ -23,5 +24,6 @@ app.use(cookieParser());
 // mount the routes
 app.use('/api/auth', authRouter);
 app.use('/api/posts', postRouter);
+app.use('/api/user', userRouter);
 
 startServer();
