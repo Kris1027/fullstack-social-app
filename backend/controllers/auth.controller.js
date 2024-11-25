@@ -1,6 +1,4 @@
 import bcrypt from 'bcryptjs';
-
-import Post from '../models/post.model.js';
 import User from '../models/user.model.js';
 
 import { generateTokenAndSetCookie } from '../utils/generate-token-and-set-cookie.js';
@@ -38,7 +36,7 @@ export const signup = async (req, res) => {
         generateTokenAndSetCookie(newUser._id, res);
 
         // remove the password before sending the response to the client
-        const { password: _, ...userWithoutPassword } = newUser._doc;
+        const { password: _, ...userWithoutPassword } = newUser.toObject();
         // respond with success
         res.status(201).json({
             message: 'User registered successfully',
