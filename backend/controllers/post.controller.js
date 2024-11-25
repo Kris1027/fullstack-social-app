@@ -246,3 +246,38 @@ export const commentOnPost = async (req, res) => {
         handleControllerError('commentOnPost', res, error);
     }
 };
+
+export const toggleLikePost = async (req, res) => {
+    try {
+        // get the post ID from the URL parameters
+        const { id: postId } = req.params;
+
+        // get the user ID from the req.user object
+        const userId = req.user._id;
+
+        // find the post in the database
+        const post = await Post.findById(postId);
+        if (!post) return res.status(404).json({ message: 'Post not found' });
+
+        // check if the user already liked the post
+        const isLiked = post.likes.includes(userId);
+        if (isLiked) {
+            // is user already liked the post, remove the like
+            post.likes = post.likes.filter((id) => id.toString() !== userId.toString());
+        } else {
+            // if user hasn't liked the post, add the like
+            post.likes.push(userId);
+        }
+
+        // save the updated post
+        await post.save();
+
+        // return a success response
+        res.status(200).json({
+            message: isLiked ? 'Post unliked successfully' : 'Post liked successfully',
+            likesCount: post.likes.length,
+        });
+    } catch (error) {
+        handleControllerError('toggleLikePost', res, error);
+    }
+};
