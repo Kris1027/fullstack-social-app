@@ -335,3 +335,45 @@ export const getFollowedPosts = async (req, res) => {
         handleControllerError('getFollowedPosts', res, error);
     }
 };
+
+export const getLikedPosts = async (req, res) => {
+    try {
+        // get the logged in user's ID from req.user
+        const userId = req.user._id;
+
+        // find the logged in user and get their liked posts
+        const user = await User.findById(userId).select('likedPosts');
+        if (!user) return res.status(404).json({ message: 'User not found' });
+
+        // extract pagination query parameters
+        const { page = 1, limit = 10 } = req.query;
+
+        // calculate the number of posts to skip for pagination
+        const skip = (page - 1) * limit;
+
+        // find all liked posts
+        const likedPosts = await Post.find({ _id: { $in: user.likedPosts } })
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(Number(limit))
+            .populate('user', 'username fullname email')
+            .populate('comments.user', 'username fullName email')
+            .populate('likes', 'username fullName email');
+
+        // count the total number of likedPosts
+        const totalLikedPosts = await Post.countDocuments({ _id: { $in: user.likedPosts } });
+
+        // respond with the liked posts and pagination data
+        res.status(200).json({
+            message: 'Liked posts fetched successfully',
+            likedPosts,
+            pagination: {
+                totalLikedPosts,
+                currentPage: Number(page),
+                totalPages: Math.ceil(totalLikedPosts / limit),
+            },
+        });
+    } catch (error) {
+        handleControllerError('getLikedPosts', res, error);
+    }
+};

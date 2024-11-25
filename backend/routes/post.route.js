@@ -6,6 +6,7 @@ import {
     deletePost,
     getAllPosts,
     getFollowedPosts,
+    getLikedPosts,
     getUserPosts,
     toggleLikePost,
     updatePost,
@@ -21,5 +22,6 @@ router.get('/user/:userId', authMiddleware, getUserPosts);
 router.post('/:id/comment', authMiddleware, commentOnPost);
 router.put('/:id/like', authMiddleware, toggleLikePost);
 router.get('/followed', authMiddleware, getFollowedPosts);
+router.get('/liked', authMiddleware, getLikedPosts);
 
 export default router;
