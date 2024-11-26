@@ -14,7 +14,7 @@
 -   [x] routes for authentication and authorization: signup, login, logout, getAuthUser
 -   [x] routes for posts: getAllPosts, getFollowedPosts, getLikedPosts, getUserPosts, createPost, toggleLikePost, commentOnPost, updatePost, deletePost
 -   [x] routes for user: getUserProfile, getSuggestedUsers, toggleFollowUser, updateUser
--   [ ] routes for notifications: getAllNotifications, deleteNotifications
+-   [x] routes for notifications: getAllNotifications, deleteNotifications
 -   [x] validation for auth
 -   [ ] validation for posts
 -   [ ] validation for user

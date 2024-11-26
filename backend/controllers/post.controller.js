@@ -1,6 +1,6 @@
 import cloudinary from '../config/cloudinary.js';
 
-import { createNotification } from '../utils/createNotification.js';
+import { createNotification } from '../utils/create-notification.js';
 import { handleControllerError } from '../utils/handle-controller-error.js';
 
 import Post from '../models/post.model.js';

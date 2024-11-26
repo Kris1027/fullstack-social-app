@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs';
 import cloudinary from '../config/cloudinary.js';
 
 import { handleControllerError } from '../utils/handle-controller-error.js';
-import { createNotification } from '../utils/createNotification.js';
+import { createNotification } from '../utils/create-notification.js';
 
 import Post from '../models/post.model.js';
 import User from '../models/user.model.js';
