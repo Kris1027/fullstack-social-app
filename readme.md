@@ -13,7 +13,7 @@
 -   [x] middleware to protect routes from unauthorized users
 -   [x] routes for authentication and authorization: signup, login, logout, getAuthUser
 -   [x] routes for posts: getAllPosts, getFollowedPosts, getLikedPosts, getUserPosts, createPost, toggleLikePost, commentOnPost, updatePost, deletePost
--   [ ] routes for user: getUserProfile, getSuggestedUsers, toggleFollowUser, updateUser, changeUserPassword
+-   [x] routes for user: getUserProfile, getSuggestedUsers, toggleFollowUser, updateUser
 -   [ ] routes for notifications: getAllNotifications, getSingleNotification, deleteNotifications, deleteSingleNotification
 -   [x] validation for auth
 -   [ ] validation for posts

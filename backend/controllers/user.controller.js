@@ -1,3 +1,4 @@
+import bcrypt from 'bcryptjs';
 import cloudinary from '../config/cloudinary.js';
 
 import Post from '../models/post.model.js';
@@ -153,7 +154,8 @@ export const updateUser = async (req, res) => {
         const userId = req.user._id;
 
         // extract fields to update from the request body
-        const { fullName, username, email, bio, link, profileImg } = req.body;
+        const { fullName, username, email, bio, link, profileImg, currentPassword, newPassword } =
+            req.body;
 
         // find the user in the database
         const user = await User.findById(userId);
@@ -192,6 +194,29 @@ export const updateUser = async (req, res) => {
         if (fullName) user.fullName = fullName;
         if (bio) user.bio = bio;
         if (link) user.link = link;
+
+        // handle password change
+        if (currentPassword || newPassword) {
+            // ensure both currentPassword and newPassword are provided
+            if (!currentPassword || !newPassword) {
+                return res.status(400).json({
+                    message: 'Both current and new passwords are required to change the password',
+                });
+            }
+
+            // verify the current password
+            const isPasswordValid = await bcrypt.compare(currentPassword, user.password);
+            if (!isPasswordValid) {
+                return res.status(401).json({ message: 'Incorrect current password' });
+            }
+
+            // hash the new password
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+            // update the user's password
+            user.password = hashedPassword;
+        }
 
         // save the updated user data
         await user.save();
