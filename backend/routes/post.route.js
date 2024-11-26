@@ -11,10 +11,11 @@ import {
     toggleLikePost,
     updatePost,
 } from '../controllers/post.controller.js';
+import { validateCreatePost } from '../validators/post.validator.js';
 
 const router = express.Router();
 
-router.post('/create', authMiddleware, createPost);
+router.post('/create', authMiddleware, validateCreatePost, createPost);
 router.delete('/:id', authMiddleware, deletePost);
 router.put('/:id', authMiddleware, updatePost);
 router.get('/all', authMiddleware, getAllPosts);
