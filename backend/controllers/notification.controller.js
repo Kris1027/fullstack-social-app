@@ -34,3 +34,21 @@ export const getAllNotifications = async (req, res) => {
         handleControllerError('getAllNotifications', res, error);
     }
 };
+
+export const deleteAllNotifications = async (req, res) => {
+    try {
+        // get the logged in user's ID from req.user
+        const userId = req.user._id;
+
+        // delete all notifications for this user
+        const result = await Notification.deleteMany({ toUser: userId });
+
+        // respond with the count of deleted notifications
+        res.status(200).json({
+            message: 'All notifications deleted successfully',
+            deletedCount: result.deletedCount,
+        });
+    } catch (error) {
+        handleControllerError('deleteAllNotifications', res, error);
+    }
+};
