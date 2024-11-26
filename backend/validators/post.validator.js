@@ -13,3 +13,15 @@ export const validateCreatePost = [
         .withMessage('Text must not exceed 500 characters'),
     handleValidateErrors,
 ];
+
+export const validateUpdatePost = [
+    body('text')
+        .optional()
+        .isLength({ max: 500 })
+        .withMessage('Text must not exceed 500 characters'),
+    body('image')
+        .optional()
+        .matches(/^data:image\/[a-z]+;base64,.+$/)
+        .withMessage('Invalid image format. Must be a base64-encoded image'),
+    handleValidateErrors,
+];
