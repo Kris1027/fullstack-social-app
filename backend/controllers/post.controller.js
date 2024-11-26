@@ -1,9 +1,10 @@
 import cloudinary from '../config/cloudinary.js';
 
+import { createNotification } from '../utils/createNotification.js';
+import { handleControllerError } from '../utils/handle-controller-error.js';
+
 import Post from '../models/post.model.js';
 import User from '../models/user.model.js';
-
-import { handleControllerError } from '../utils/handle-controller-error.js';
 
 export const createPost = async (req, res) => {
     try {
@@ -242,6 +243,14 @@ export const commentOnPost = async (req, res) => {
         };
         post.comments.push(newComment);
 
+        // create the notification when the comment is created
+        await createNotification({
+            fromUser: userId,
+            toUser: post.user,
+            type: 'comment',
+            postId,
+        });
+
         // save the updated post
         await post.save();
 
@@ -278,6 +287,14 @@ export const toggleLikePost = async (req, res) => {
             // if user hasn't liked the post add the like
             post.likes.push(userId);
             user.likedPosts.push(postId);
+
+            // create notification when the post is liked
+            await createNotification({
+                fromUser: userId,
+                toUser: post.user,
+                type: 'like',
+                postId,
+            });
         }
 
         // save the updated post and user

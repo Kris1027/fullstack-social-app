@@ -1,10 +1,11 @@
 import bcrypt from 'bcryptjs';
 import cloudinary from '../config/cloudinary.js';
 
+import { handleControllerError } from '../utils/handle-controller-error.js';
+import { createNotification } from '../utils/createNotification.js';
+
 import Post from '../models/post.model.js';
 import User from '../models/user.model.js';
-
-import { handleControllerError } from '../utils/handle-controller-error.js';
 
 export const toggleFollowUser = async (req, res) => {
     try {
@@ -38,6 +39,13 @@ export const toggleFollowUser = async (req, res) => {
             // if not following, follow the user
             currentUser.following.push(targetUserId);
             targetUser.followers.push(userId);
+
+            // create notification for following
+            await createNotification({
+                fromUser: userId,
+                toUser: targetUserId,
+                type: 'follow',
+            });
         }
 
         // save the both users
