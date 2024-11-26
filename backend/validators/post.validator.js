@@ -25,3 +25,12 @@ export const validateUpdatePost = [
         .withMessage('Invalid image format. Must be a base64-encoded image'),
     handleValidateErrors,
 ];
+
+export const validateCommentOnPost = [
+    body('text')
+        .notEmpty()
+        .withMessage('Comment text is required')
+        .isLength({ max: 500 })
+        .withMessage('Comment text must not exceed 500 characters'),
+    handleValidateErrors,
+];
