@@ -1,3 +1,5 @@
+import cloudinary from '../config/cloudinary.js';
+
 import Post from '../models/post.model.js';
 import User from '../models/user.model.js';
 
@@ -142,5 +144,73 @@ export const getSuggestedUsers = async (req, res) => {
         });
     } catch (error) {
         handleControllerError('getSuggestedUsers', res, error);
+    }
+};
+
+export const updateUser = async (req, res) => {
+    try {
+        // get the logged in user's ID from req.user
+        const userId = req.user._id;
+
+        // extract fields to update from the request body
+        const { fullName, username, email, bio, link, profileImg } = req.body;
+
+        // find the user in the database
+        const user = await User.findById(userId);
+        if (!user) return res.status(404).json({ message: 'User not found' });
+
+        // check if the new username is already in use
+        if (username && username !== user.username) {
+            const existingUser = await User.findOne({ username });
+            if (existingUser) return res.status(400).json({ message: 'Username is already taken' });
+            user.username = username; // update the username
+        }
+
+        // check if the new email is already in use
+        if (email && email !== user.email) {
+            const existingEmail = await User.findOne({ email });
+            if (existingEmail) return res.status(400).json({ message: 'Email is already taken' });
+            user.email = email; // update the email
+        }
+
+        // update profile image if a new one is provided
+        if (profileImg) {
+            // remove the old profile image from cloudinary if it exists
+            if (user.profileImg) {
+                const publicId = user.profileImg.split('/').pop()?.split('.')[0];
+                await cloudinary.uploader.destroy(`fullstack-social-app/${publicId}`);
+            }
+
+            // upload the new profile image to cloudinary
+            const uploadResult = await cloudinary.uploader.upload(profileImg, {
+                folder: 'fullstack-social-app/profile-images',
+            });
+            user.profileImg = uploadResult.secure_url; // update the profile image
+        }
+
+        // update other fields
+        if (fullName) user.fullName = fullName;
+        if (bio) user.bio = bio;
+        if (link) user.link = link;
+
+        // save the updated user data
+        await user.save();
+
+        // return the updated user profile
+        res.status(200).json({
+            message: 'User profile updated successfully',
+            user: {
+                username: user.username,
+                fullName: user.fullName,
+                bio: user.bio,
+                link: user.link,
+                profileImg: user.profileImg,
+                email: user.email,
+                followers: user.followers,
+                following: user.following,
+            },
+        });
+    } catch (error) {
+        handleControllerError('updateUser', res, error);
     }
 };
