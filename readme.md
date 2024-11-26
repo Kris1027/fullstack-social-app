@@ -17,87 +17,88 @@
 -   [x] validation for posts
 -   [x] validation for user
 
-## Frontend Tech Stack
+# **Frontend Tech Stack**
 
-### This project uses a modern and scalable frontend stack tailored to provide an exceptional user and developer experience. Below is an overview of the technologies chosen for this application.
+This project uses a modern and scalable frontend stack tailored to provide an exceptional user and developer experience. Below is an overview of the technologies chosen for this application.
 
-### Core Technologies
+## **Core Technologies**
 
--   React
+-   **[React](https://reactjs.org/)**
     A declarative JavaScript library for building user interfaces efficiently and effectively.
 
--   TypeScript
+-   **[TypeScript](https://www.typescriptlang.org/)**
+    Adds static typing to JavaScript, improving code reliability and maintainability.
 
-### Adds static typing to JavaScript, improving code reliability and maintainability.
-
--   Vite
+-   **[Vite](https://vitejs.dev/)**
     A lightning-fast development build tool optimized for modern web applications.
 
-### Routing and Data Management
+## **Routing and Data Management**
 
--   TanStack Router
+-   **[TanStack Router](https://tanstack.com/router)**
     Provides a flexible and robust client-side routing solution for React applications.
 
--   TanStack Query
+-   **[TanStack Query](https://tanstack.com/query/latest)**
     Manages server-state, caching, and data synchronization, ensuring seamless interactions with APIs.
 
-### Styling and UI Framework
+## **Styling and UI Framework**
 
--   Tailwind CSS
+-   **[Tailwind CSS](https://tailwindcss.com/)**
     A utility-first CSS framework that simplifies styling and speeds up development.
 
--   shadcn/ui
+-   **[shadcn/ui](https://ui.shadcn.dev/)**
     A set of customizable pre-built components built with Tailwind CSS and Radix UI for building polished interfaces.
 
-### Forms and Validation
+## **Forms and Validation**
 
--   react-hook-form
+-   **[react-hook-form](https://react-hook-form.com/)**
     Lightweight and performant library for managing forms and their validation.
 
--   zod
-    A schema-based validation library that integrates seamlessly with react-hook-form and TypeScript for runtime and compile-time validation.
+-   **[zod](https://zod.dev/)**
+    A schema-based validation library that integrates seamlessly with `react-hook-form` and TypeScript for runtime and compile-time validation.
 
-### Icons and Animations
+## **Icons and Animations**
 
--   react-icons
+-   **[react-icons](https://react-icons.github.io/react-icons/)**
     A collection of popular, scalable vector icons for React applications.
 
--   motion
+-   **[motion](https://motion.dev/)**
     An alternative to Framer Motion for adding smooth and declarative animations to your UI.
 
-### Notifications
+## **Notifications**
 
--   react-hot-toast
+-   **[react-hot-toast](https://react-hot-toast.com/)**
     Provides beautiful and customizable toast notifications with minimal effort.
 
-### Internationalization
+## **Internationalization (Optional)**
 
--   i18next
+-   **[i18next](https://www.i18next.com/)**
     Enables internationalization and supports localization for multi-language applications.
 
-### Error Tracking and Monitoring
+## **Error Tracking and Monitoring**
 
--   Sentry
+-   **[Sentry](https://sentry.io/)**
     Tracks errors, monitors performance, and simplifies debugging in production environments.
 
-### Testing
+## **Testing**
 
--   React Testing Library
+-   **[React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)**
     Focused on testing React components in a way that closely mimics user interactions.
 
-### Code Quality
+## **Code Quality**
 
--   Prettier
+-   **[Prettier](https://prettier.io/)**
     Ensures consistent code formatting across the project.
 
--   ESLint
+-   **[ESLint](https://eslint.org/)**
     A tool to identify and fix problems in JavaScript code, enforcing best practices.
 
-### Why This Stack?
+---
 
-### This stack combines performance, developer experience, and scalability, making it suitable for modern web applications. It includes:
+## **Why This Stack?**
 
--   Fast builds and real-time feedback with Vite.
--   Efficient state management with TanStack Query and Router.
--   Enhanced styling with Tailwind CSS and shadcn/ui.
--   Error tracking and testing tools for reliability.
+This stack combines **performance**, **developer experience**, and **scalability**, making it suitable for modern web applications. It includes:
+
+-   **Fast builds** and **real-time feedback** with Vite.
+-   **Efficient state management** with TanStack Query and Router.
+-   **Enhanced styling** with Tailwind CSS and `shadcn/ui`.
+-   **Error tracking** and **testing tools** for reliability.
