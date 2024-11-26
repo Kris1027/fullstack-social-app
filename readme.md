@@ -1,5 +1,3 @@
-## Fullstack Social App
-
 # Backend Tech Stack
 
 ## This project employs a modern and secure backend stack designed to handle user data efficiently, enable seamless API communication, and ensure scalability. Below is an overview of the chosen technologies for the backend.
@@ -8,36 +6,36 @@
 
 ## Core Technologies
 
--   **Node.js**
+-   [**Node.js**](https://nodejs.org/)
     A runtime environment that executes JavaScript code server-side, enabling high-performance and scalable applications.
 
--   **Express.js**
+-   [**Express.js**](https://expressjs.com/)
     A minimal and flexible Node.js web application framework for building RESTful APIs efficiently.
 
--   **MongoDB**
+-   [**MongoDB**](https://www.mongodb.com/)
     A NoSQL database designed for flexibility and scalability, used for storing user data, posts, and notifications.
 
--   **Mongoose**
+-   [**Mongoose**](https://mongoosejs.com/)
     An Object Data Modeling (ODM) library for MongoDB and Node.js, providing schema-based solutions to manage application data.
 
 ---
 
 ## Authentication and Authorization
 
--   **jsonwebtoken**
+-   [**jsonwebtoken**](https://github.com/auth0/node-jsonwebtoken)
     For generating and verifying JSON Web Tokens (JWT) to authenticate users securely.
 
--   **bcryptjs**
+-   [**bcryptjs**](https://github.com/dcodeIO/bcrypt.js)
     A library for hashing and validating passwords, ensuring secure user authentication.
 
--   **cookie-parser**
+-   [**cookie-parser**](https://github.com/expressjs/cookie-parser)
     Middleware for parsing and managing cookies in requests and responses.
 
 ---
 
 ## Validation and Error Handling
 
--   **express-validator**
+-   [**express-validator**](https://express-validator.github.io/docs/)
     A library for validating and sanitizing user inputs to ensure robust data handling and security.
 
 -   **Custom Utility: handle-controller-error**
@@ -47,31 +45,31 @@
 
 ## Cloud Storage
 
--   **Cloudinary**
+-   [**Cloudinary**](https://cloudinary.com/)
     For handling image uploads, storage, and optimization, ensuring seamless user profile and post image management.
 
 ---
 
 ## Cross-Origin Resource Sharing
 
--   **CORS**
+-   [**CORS**](https://github.com/expressjs/cors)
     Middleware for enabling secure cross-origin resource sharing, allowing frontend applications to communicate with the backend.
 
 ---
 
 ## Environment Management
 
--   **dotenv**
+-   [**dotenv**](https://github.com/motdotla/dotenv)
     For managing environment variables and ensuring secure access to API keys and sensitive configurations.
 
 ---
 
 ## Development Tools
 
--   **Nodemon**
+-   [**Nodemon**](https://nodemon.io/)
     A development utility that automatically restarts the server on file changes, improving productivity.
 
--   **@types/express and @types/mongodb**
+-   [**@types/express**](https://www.npmjs.com/package/@types/express) and [**@types/mongodb**](https://www.npmjs.com/package/@types/mongodb)
     TypeScript type definitions for Express.js and MongoDB to ensure type safety during development.
 
 ---
