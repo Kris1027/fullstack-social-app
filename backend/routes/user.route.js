@@ -7,11 +7,12 @@ import {
     toggleFollowUser,
     updateUser,
 } from '../controllers/user.controller.js';
+import { validateUpdateUser } from '../validators/user.validator.js';
 
 const router = express.Router();
 
 router.get('/suggested', authMiddleware, getSuggestedUsers);
-router.put('/update', authMiddleware, updateUser);
+router.put('/update', authMiddleware, validateUpdateUser, updateUser);
 router.put('/:id/follow', authMiddleware, toggleFollowUser);
 router.get('/:id', authMiddleware, getUserProfile);
 
