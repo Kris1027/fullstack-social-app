@@ -103,3 +103,44 @@ export const getUserProfile = async (req, res) => {
         handleControllerError('getUserProfile', res, error);
     }
 };
+
+export const getSuggestedUsers = async (req, res) => {
+    try {
+        // get the logged in user's ID from req.user
+        const userId = req.user._id;
+
+        // find the logged in user to get the list of following
+        const loggedInUser = await User.findById(userId).select('following');
+        if (!loggedInUser) return res.status(404).json({ message: 'User not found' });
+
+        // extract the query parameters for pagination
+        const { page = 1, limit = 10 } = req.query;
+        const skip = (page - 1) * limit;
+
+        // find users that the logged in user does not follow and exclude themselves
+        const suggestedUsers = await User.find({
+            _id: { $nin: [...loggedInUser.following, userId] }, // exclude following and self
+        })
+            .select('username fullName profileImg bio')
+            .skip(skip) // apply pagination
+            .limit(Number(limit)); // limit the number of users
+
+        // count total suggested users
+        const totalSuggestedUsers = await User.countDocuments({
+            _id: { $nin: [...loggedInUser.following, userId] },
+        });
+
+        // respond with the suggested users and pagination data
+        res.status(200).json({
+            message: 'Suggested users fetched successfully',
+            users: suggestedUsers,
+            pagination: {
+                totalUsers: totalSuggestedUsers,
+                currentPage: Number(page),
+                totalPages: Math.ceil(totalSuggestedUsers / limit),
+            },
+        });
+    } catch (error) {
+        handleControllerError('getSuggestedUsers', res, error);
+    }
+};
