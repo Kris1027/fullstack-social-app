@@ -1,21 +1,111 @@
 ## Fullstack Social App
 
-## to do:
+# Backend Tech Stack
 
-### Backend
+## This project employs a modern and secure backend stack designed to handle user data efficiently, enable seamless API communication, and ensure scalability. Below is an overview of the chosen technologies for the backend.
 
--   [x] server and connection with database
--   [x] model for user: username, password, fullName, email, followers, following, profileImg, bio, link, likedPosts, timestamps
--   [x] model for posts: user, image, text, likes, comments: (text, user, createdAt), timestamps
--   [x] model for notifications: fromUser, toUser, type: (follow, like, comment), read, timestamps
--   [x] middleware to protect routes from unauthorized users
--   [x] routes for authentication and authorization: signup, login, logout, getAuthUser
--   [x] routes for posts: getAllPosts, getFollowedPosts, getLikedPosts, getUserPosts, createPost, toggleLikePost, commentOnPost, updatePost, deletePost
--   [x] routes for user: getUserProfile, getSuggestedUsers, toggleFollowUser, updateUser
--   [x] routes for notifications: getAllNotifications, deleteNotifications
--   [x] validation for auth
--   [x] validation for posts
--   [x] validation for user
+---
+
+## Core Technologies
+
+-   **Node.js**
+    A runtime environment that executes JavaScript code server-side, enabling high-performance and scalable applications.
+
+-   **Express.js**
+    A minimal and flexible Node.js web application framework for building RESTful APIs efficiently.
+
+-   **MongoDB**
+    A NoSQL database designed for flexibility and scalability, used for storing user data, posts, and notifications.
+
+-   **Mongoose**
+    An Object Data Modeling (ODM) library for MongoDB and Node.js, providing schema-based solutions to manage application data.
+
+---
+
+## Authentication and Authorization
+
+-   **jsonwebtoken**
+    For generating and verifying JSON Web Tokens (JWT) to authenticate users securely.
+
+-   **bcryptjs**
+    A library for hashing and validating passwords, ensuring secure user authentication.
+
+-   **cookie-parser**
+    Middleware for parsing and managing cookies in requests and responses.
+
+---
+
+## Validation and Error Handling
+
+-   **express-validator**
+    A library for validating and sanitizing user inputs to ensure robust data handling and security.
+
+-   **Custom Utility: handle-controller-error**
+    A reusable utility for consistent error handling across all controllers.
+
+---
+
+## Cloud Storage
+
+-   **Cloudinary**
+    For handling image uploads, storage, and optimization, ensuring seamless user profile and post image management.
+
+---
+
+## Cross-Origin Resource Sharing
+
+-   **CORS**
+    Middleware for enabling secure cross-origin resource sharing, allowing frontend applications to communicate with the backend.
+
+---
+
+## Environment Management
+
+-   **dotenv**
+    For managing environment variables and ensuring secure access to API keys and sensitive configurations.
+
+---
+
+## Development Tools
+
+-   **Nodemon**
+    A development utility that automatically restarts the server on file changes, improving productivity.
+
+-   **@types/express and @types/mongodb**
+    TypeScript type definitions for Express.js and MongoDB to ensure type safety during development.
+
+---
+
+## Folder Structure
+
+-   **Config**
+    Contains configuration files, such as `cloudinary.js` and `db.js`, for managing external services and database connections.
+
+-   **Controllers**
+    Includes business logic for user management, post interactions, notifications, and authentication.
+
+-   **Routes**
+    Manages the API endpoints for users, posts, notifications, and authentication.
+
+-   **Models**
+    Defines MongoDB schemas and data models for users, posts, and notifications.
+
+-   **Utils**
+    Contains utility functions for notifications, error handling, and token generation.
+
+-   **Validators**
+    Implements middleware for input validation using `express-validator`.
+
+---
+
+## Why This Stack?
+
+-   **Scalability**: Built to handle increasing user activity efficiently.
+-   **Security**: Employs robust authentication, password hashing, and input validation.
+-   **Developer Productivity**: Utilizes modular file structure and productivity-enhancing tools like Nodemon and dotenv.
+-   **Cloud Integration**: Leverages Cloudinary for efficient media management.
+
+This backend stack complements the frontend technologies seamlessly, ensuring a cohesive and robust application ecosystem.
 
 # **Frontend Tech Stack**
 
