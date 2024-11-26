@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 
 import authRouter from './routes/auth.route.js';
+import notificationRouter from './routes/notification.route.js';
 import postRouter from './routes/post.route.js';
 import userRouter from './routes/user.route.js';
 
@@ -25,5 +26,6 @@ app.use(cookieParser());
 app.use('/api/auth', authRouter);
 app.use('/api/posts', postRouter);
 app.use('/api/user', userRouter);
+app.use('/api/notifications', notificationRouter);
 
 startServer();
