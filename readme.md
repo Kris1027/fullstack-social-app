@@ -190,3 +190,156 @@ This stack combines **performance**, **developer experience**, and **scalability
 -   **Efficient state management** with TanStack Query and Router.
 -   **Enhanced styling** with Tailwind CSS and `shadcn/ui`.
 -   **Error tracking** and **testing tools** for reliability.
+
+## **Steps to Build the Frontend**
+
+### **1. Project Setup**
+
+-   [ ] **Initialize the project:**
+    -   Use `Vite` to create a new React + TypeScript project.
+    -   Install `Tailwind CSS` following the official documentation.
+    -   Set up `Prettier` for code formatting.
+    -   Configure `ESLint` to enforce coding standards and best practices.
+-   [ ] **Define folder structure:**
+    -   Create a scalable folder structure:
+        -   `src/components` - Reusable UI components.
+        -   `src/pages` - Page components corresponding to routes.
+        -   `src/hooks` - Custom hooks for reusable logic.
+        -   `src/api` - API functions for backend communication.
+        -   `src/utils` - Utility functions and helpers.
+
+---
+
+### **2. Authentication System**
+
+-   [ ] **Build authentication pages:**
+    -   Create `Login` and `Signup` forms using `react-hook-form` and `zod` for validation.
+    -   Style the forms with `Tailwind CSS`.
+-   [ ] **Set up API integration:**
+    -   Connect forms to backend endpoints (`/api/auth/login`, `/api/auth/signup`) using `TanStack Query` for handling API requests.
+    -   Display error messages for failed login/signup attempts.
+-   [ ] **Implement authentication flow:**
+    -   Use `TanStack Router` to create protected routes for logged-in users.
+    -   Store and manage authentication tokens securely (e.g., in HTTP-only cookies).
+
+---
+
+### **3. User Interface and Profile**
+
+-   [ ] **Navigation bar:**
+    -   Add a responsive navigation bar with links to "Home," "Search," "Notifications," and "Profile."
+    -   Highlight the active page dynamically.
+-   [ ] **Profile page:**
+    -   Display user details: profile picture, bio, link, followers, and following.
+    -   Include a section to display the user's posts.
+    -   Add an "Edit Profile" button for users to update their details.
+
+---
+
+### **4. Post Management**
+
+-   [ ] **Home feed:**
+    -   Fetch posts from followed users via the `/api/posts/followed` endpoint.
+    -   Use `TanStack Query` for fetching and caching posts.
+    -   Implement infinite scrolling for a seamless feed experience.
+-   [ ] **Post interactions:**
+    -   Allow users to like/unlike posts.
+    -   Add a comments section with real-time updates when comments are added.
+-   [ ] **Post creation and updates:**
+    -   Build a "Create Post" modal with support for uploading images to Cloudinary.
+    -   Implement edit and delete functionality for posts owned by the logged-in user.
+
+---
+
+### **5. Notifications**
+
+-   [ ] **Notifications page:**
+    -   Fetch and display notifications (likes, comments, follows) from `/api/notifications`.
+    -   Mark notifications as "read" when viewed.
+-   [ ] **Real-time notifications:**
+    -   Use `react-hot-toast` to display in-app toast notifications for likes, comments, and follows.
+
+---
+
+### **6. Following System**
+
+-   [ ] **Suggested users:**
+    -   Create a page to display user recommendations fetched from `/api/users/suggested`.
+    -   Include a "Follow" button for each suggested user.
+-   [ ] **Follow/Unfollow users:**
+    -   Add functionality to follow/unfollow users dynamically.
+    -   Update the followers and following lists in real-time.
+
+---
+
+### **7. Search and Explore**
+
+-   [ ] **Search functionality:**
+    -   Add a search bar to find users by username or full name.
+    -   Display search results with user profiles and a "Follow" button.
+-   [ ] **Explore page:**
+    -   Show trending or popular posts globally (from all users).
+    -   Implement pagination for the explore feed.
+
+---
+
+### **8. Internationalization (Optional)**
+
+-   [ ] Set up `i18next` for multi-language support.
+-   [ ] Create a settings page to toggle between languages.
+-   [ ] Add translations for text elements across the application.
+
+---
+
+### **9. Animations and UI Enhancements**
+
+-   [ ] **Animations:**
+    -   Use `motion` for smooth animations in transitions, modals, and buttons.
+    -   Enhance user interaction with animated hover effects.
+-   [ ] **UI components:**
+    -   Integrate `shadcn/ui` for pre-built, customizable UI components styled with Tailwind CSS.
+
+---
+
+### **10. Error Tracking and Monitoring**
+
+-   [ ] Configure `Sentry` to monitor and log frontend errors in production.
+-   [ ] Test error handling for key user actions (e.g., login failures, API errors).
+
+---
+
+### **11. Testing**
+
+-   [ ] **Write unit tests:**
+    -   Use `React Testing Library` to test components.
+    -   Cover core functionality like form validation, API calls, and user interactions.
+-   [ ] **Integration tests:**
+    -   Test critical flows such as login, signup, post creation, and notifications.
+-   [ ] **E2E testing (Optional):**
+    -   Consider tools like Cypress for end-to-end testing.
+
+---
+
+### **12. Deployment**
+
+-   [ ] **Production build:**
+    -   Use `Vite` to generate an optimized build of the application.
+-   [ ] **Hosting:**
+    -   Deploy the frontend to a platform like Vercel or Netlify.
+-   [ ] **Environment variables:**
+    -   Configure API URLs and other environment variables for production.
+-   [ ] **Testing in production:**
+    -   Verify that the frontend interacts seamlessly with the backend.
+
+---
+
+### **13. Bonus Features (Future Enhancements)**
+
+-   [ ] **Stories feature:**
+    -   Allow users to upload temporary images or videos, similar to Instagram Stories.
+-   [ ] **Direct messaging:**
+    -   Implement a private chat feature between users.
+-   [ ] **Analytics dashboard:**
+    -   Display insights like post engagement and follower growth.
+
+---
