@@ -11,7 +11,7 @@ function Login() {
     return (
         <main className='flex gap-20 justify-center items-center h-screen'>
             <div>
-                <img className='rounded-lg pb-4 w-40' src='/logo.webp' alt='logo' />
+                <img className='rounded-lg w-40' src='/logo.webp' alt='logo' />
             </div>
             <div className='space-y-4'>
                 <Card className='w-80'>
