@@ -195,7 +195,7 @@ This stack combines **performance**, **developer experience**, and **scalability
 
 ### **1. Project Setup**
 
--   [ ] **Initialize the project:**
+-   [x] **Initialize the project:**
     -   Use `Vite` to create a new React + TypeScript project.
     -   Install `Tailwind CSS` following the official documentation.
     -   Set up `Prettier` for code formatting.
