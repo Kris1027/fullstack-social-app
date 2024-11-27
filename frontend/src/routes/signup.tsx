@@ -3,11 +3,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { createFileRoute, Link } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/register')({
-    component: Register,
+export const Route = createFileRoute('/signup')({
+    component: RouteComponent,
 });
 
-function Register() {
+function RouteComponent() {
     return (
         <main className='flex gap-20 justify-center items-center h-screen'>
             <div>

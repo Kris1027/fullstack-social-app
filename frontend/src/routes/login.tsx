@@ -33,7 +33,7 @@ function Login() {
                     <CardHeader>
                         <p>
                             Don't have an account yet?{' '}
-                            <Link to='/register'>
+                            <Link to='/signup'>
                                 <span className='text-blue-400 font-bold'>Register</span>
                             </Link>
                         </p>
